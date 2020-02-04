@@ -3,7 +3,8 @@ Project Size: 113MB
 /* Added configuration classes -> AppStart -> Script Bundles (Web Optimization) & Global Filters */
 /* Added Bootstrap 4 (Framework) */
 /* Added MVC 5 View Page (Razor) -> index.cshtml */
-/* Added Scripts folder */
+/* Modified web.config file -> <add key="webpages:Enabled" value="true"/>. Line 16 */
+/* Added Scripts folder to Project files */
 
 Fix 'public ValidationResult Post([FromBody]NewReservationItem item)' to 'public string Post([FromBody]NewReservationItem item)' to allow for API Client validation -> String Array of Enums
 	-> Example: OutsideWorkingHours, TooLong
