@@ -1,0 +1,17 @@
+Project Size: 113MB
+
+/* Added configuration classes -> AppStart -> Script Bundles (Web Optimization) & Global Filters */
+/* Added Bootstrap 4 (Framework) */
+/* Added MVC 5 View Page (Razor) -> index.cshtml */
+/* Added Scripts folder */
+
+Fix 'public ValidationResult Post([FromBody]NewReservationItem item)' to 'public string Post([FromBody]NewReservationItem item)' to allow for API Client validation -> String Array of Enums
+	-> Example: OutsideWorkingHours, TooLong
+	-> File -> ReservationsController.cs, Line 49
+	
+Fix 'var id = _db.Reservations.Keys.Max() + 1;' to check if Reservations != 0 when adding new reservation. If keys = 0, set id = 1
+	-> _db.Reservations.Keys.Max() throws exception if all reservations are deleted and attempting to add new one
+	-> _db.Reservations.Keys.Count.Equals(0) ? 1 : _db.Reservations.Keys.Max() + 1;  File -> AddReservationQuery.cs, Line 19
+	-> Recreate error, run application and delete all existing reservations. Try to create new one with the following line of code: var id = _db.Reservations.Keys.Max() + 1;
+	
+	

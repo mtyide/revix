@@ -1,0 +1,182 @@
+﻿@using System.Web.Optimization
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Reservations Management Application - Revix Assessment</title>
+    @Styles.Render("~/Content/css")
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,700,600,800,300italic,400italic,600italic' rel='stylesheet' type='text/css'>
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="20" class="hold-transition" style="font-family: Raleway">
+    <div class="wrapper">
+        <div class="content-wrapper">
+            <div style="padding-top: 1.0em; display: block; width: 98%;" id="reservations-home">
+                <div style="background-color: white; border-width: 1px; padding-left: 0.2em; font-size: 12px;">
+                    <table cellpadding="0" cellspacing="0" style="width: 100%;">
+                        <tr>
+                            <td style="text-align: left;" valign="top">
+                                <div class="alert alert-link alert-dismissible">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                    <div style="padding-top: 0.5em; padding-bottom: 0.5em; border: 0px solid ghostwhite; border-radius: 9px; padding-right: 0.5em;">
+                                        <div class="list-group-item" style="background-color: ghostwhite; padding-left: 0.8em; padding-right: 0.8em;">
+                                            <h4>Reservations Management Application</h4> This application allows you to manage lecture hall reservation bookings
+                                        </div>
+                                    </div>
+                                </div>
+                                <table style="padding-top: 0.5em; width: 100%;">
+                                    <tr>
+                                        <td style="text-align: left; padding-left: 0.2em; padding-bottom: 0.2em; padding-top: 0.5em; font-size: 12px;">
+                                            <label>Reservations:</label> <span class="pull-right"><a style="cursor: pointer; color: steelblue; text-decoration: underline; font-weight: bold;" onclick="$('#div-new-reservation').fadeIn();">New Reservation</a> | <a style="cursor: pointer; color: steelblue; text-decoration: underline; font-weight: bold;" onclick="fetchLectureHalls()();">Halls</a> | <a style="cursor: pointer; color: steelblue; text-decoration: underline; font-weight: bold;" onclick="fetchLecturers();">Lecturers</a></span>
+                                            <hr />
+                                            <table id="reservations-items" style="width: 100%;" class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Hall</th>
+                                                        <th>Lecturer</th>
+                                                        <th>Subject</th>
+                                                        <th>From</th>
+                                                        <th>To</th>
+                                                        <th id="reservations-items-header" style="padding-bottom: 0.5em;"></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="reservations-items-body"></tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                        <th></th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                            <div id="div-lecture-halls" style="display: none;">
+                                                <label>Lecture Halls:</label> <span class="pull-right"><a style="cursor: pointer; color: darkgoldenrod; font-weight: bold;" onclick="$('#div-lecture-halls').fadeOut();">Close</a></span>
+                                                <hr />
+                                                <table id="lecture-halls-items" style="width: 100%;" class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Hall</th>
+                                                            <th>Capacity</th>
+                                                            <th id="lecture-halls-items-header" style="padding-bottom: 0.5em;"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="lecture-halls-items-body"></tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            <div id="div-lecturers" style="display: none;">
+                                                <label>Lecturers:</label> <span class="pull-right"><a style="cursor: pointer; color: darkgoldenrod; font-weight: bold;" onclick="$('#div-lecturers').fadeOut();">Close</a></span>
+                                                <hr />
+                                                <table id="lecturers-items" style="width: 100%;" class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Title</th>
+                                                            <th>Name</th>
+                                                            <th>Surname</th>
+                                                            <th>Subject</th>
+                                                            <th id="lecturers-items-header" style="padding-bottom: 0.5em;"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="lecturers-items-body"></tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th></th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                            <div style="display: none;" id="div-new-reservation">
+                                                <label>New Reservation:</label> <span class="pull-right"><a style="cursor: pointer; color: darkgoldenrod; font-weight: bold;" onclick="$('#div-new-reservation').fadeOut();">Close</a></span>
+                                                <hr />
+                                                <form id="fmReservations">
+                                                    <div class="form-group has-feedback">
+                                                        <label for="hall">Hall:</label>
+                                                        <select id="halls" name="halls" disabled></select>
+                                                    </div>
+                                                    <div class="form-group has-feedback">
+                                                        <label for="lecturer">Lecturer:</label>
+                                                        <select id="lecturers" name="lecturers" disabled></select>
+                                                    </div>
+                                                    <div class="form-group has-feedback">
+                                                        <label for="dob">From:</label>
+                                                        <input type="datetime-local" class="form-control" placeholder="From" title="From" id="from" name="from" required pattern="^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01]) (00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])$" />
+                                                    </div>
+                                                    <div class="form-group has-feedback">
+                                                        <label for="gender">To:</label>
+                                                        <input type="datetime-local" class="form-control" placeholder="To" title="To" id="to" name="to" required pattern="^\d\d\d\d-(0?[1-9]|1[0-2])-(0?[1-9]|[12][0-9]|3[01]) (00|[0-9]|1[0-9]|2[0-3]):([0-9]|[0-5][0-9]):([0-9]|[0-5][0-9])$" />
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xs-8"></div>
+                                                        <div class="col-xs-4">
+                                                            <button type="button" id="save-reservations-btn" class="btn btn-default btn-block btn-flat" disabled>Save</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="modal fade" id="modal-task">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">Task Completed</h4>
+                        </div>
+                        <div class="modal-body">Task completed successfully</div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="modal-task-failed">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title">Task Failed</h4>
+                        </div>
+                        <div class="modal-body">
+                            Task could not be completed. Refresh page (F5) or try again
+                            <div id="task-errors" style="display: none;">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/dist")
+    @Scripts.Render("~/bundles/datatables")
+    @Scripts.Render("~/bundles/app")
+</body>
+</html>
