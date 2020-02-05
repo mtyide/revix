@@ -16,7 +16,6 @@
     var data = { From: from, To: to, LectureHallNumber: hall, LecturerId: lecturer };
 
     $.post("api/reservations", data, function (res) {
-        console.log(res);
         if (res === 'Ok') {
             $("#modal-task").modal();
             $("#save-reservations-btn").removeAttr('disabled');

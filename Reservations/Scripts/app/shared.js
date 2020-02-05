@@ -141,7 +141,6 @@ function fetchLecturers() {
 function displayValidationErrors(arrayOfErrors) {
     var errors = arrayOfErrors.split(',');
     var length = errors.length;
-    console.log(length);
     var content = '<hr />';
     content += '<label>Possible Errors:</label>';
     content += '<ul>';
