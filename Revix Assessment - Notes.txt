@@ -1,4 +1,4 @@
-Project Size: 113MB
+Project Size: 141MB
 
 /* Added configuration classes -> AppStart -> Script Bundles (Web Optimization) & Global Filters */
 /* Added Bootstrap 4 (Framework) */
